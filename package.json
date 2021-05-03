@@ -1,0 +1,22 @@
+{
+  "name": "refactoring_book",
+  "version": "1.0.0",
+  "description": "https://www.amazon.com/Refactoring-Improving-Existing-Addison-Wesley-Signature-ebook/dp/B07LCM8RG2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jsurapong/refactoring_book.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jsurapong/refactoring_book/issues"
+  },
+  "homepage": "https://github.com/Jsurapong/refactoring_book#readme",
+  "dependencies": {
+    "jest": "^26.6.3"
+  }
+}
