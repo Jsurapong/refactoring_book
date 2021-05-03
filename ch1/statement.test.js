@@ -1,6 +1,6 @@
 const plays = require("./plays.json");
 const invoices = require("./invoices.json");
-const statement = require("./01_starting_point");
+const statement = require("./statement");
 
 test("Default Statement", () => {
   const result = statement(invoices[0], plays);
