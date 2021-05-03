@@ -2,7 +2,6 @@ const plays = require("./plays.json");
 const invoices = require("./invoices.json");
 
 function statement(invoice, plays) {
-  let totalAmount = 0;
   let result = `Statement for ${invoice.customer}\n`;
 
   for (let perf of invoice.performances) {
@@ -12,17 +11,10 @@ function statement(invoice, plays) {
     result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${
       perf.audience
     } seats)\n`;
-
-    totalAmount += amountFor(perf);
   }
 
-  let volumeCredits = 0;
-  for (let perf of invoice.performances) {
-    volumeCredits += volumeCreditsFor(perf);
-  }
-
-  result += `Amount owed is ${usd(totalAmount)} \n`;
-  result += `You earned ${volumeCredits} credits\n`;
+  result += `Amount owed is ${usd(appleSauce(invoice))} \n`;
+  result += `You earned ${totalVolumeCredits(invoice)} credits\n`;
   return result;
 }
 
@@ -30,14 +22,29 @@ function playFor(aPerformance) {
   return plays[aPerformance.playID];
 }
 
-function usd(aNumber) {
-  const format = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  }).format(aNumber / 100);
+function appleSauce(invoice) {
+  let result = 0;
+  for (let perf of invoice.performances) {
+    result += amountFor(perf);
+  }
+  return result;
+}
 
-  return format;
+function totalAmount(invoice) {
+  let result = 0;
+
+  for (let perf of invoice.performances) {
+    result += amountFor(perf);
+  }
+  return result;
+}
+
+function totalVolumeCredits(invoice) {
+  let result = 0;
+  for (let perf of invoice.performances) {
+    result += volumeCreditsFor(perf);
+  }
+  return result;
 }
 
 function volumeCreditsFor(aPerformance) {
@@ -49,6 +56,16 @@ function volumeCreditsFor(aPerformance) {
   }
 
   return result;
+}
+
+function usd(aNumber) {
+  const format = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  }).format(aNumber / 100);
+
+  return format;
 }
 
 function amountFor(aPerformance) {
